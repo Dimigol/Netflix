@@ -1,0 +1,94 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container */
+main {
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+/* Seção de perfis */
+.profiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Lista de perfis */
+.profile-list {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Item de perfil */
+.profile {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.profile:hover {
+    transform: scale(1.1);
+} 
+
+/* Imagem do perfil */
+.profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.profile:hover img {
+    border-color: #e50914; /* Vermelho Netflix */
+}
+
+/* Texto do perfil */
+.profile p {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .profile-list {
+        gap: 1rem;
+    }
+    .profile img {
+        width: 100px;
+        height: 100px;
+    }
+}

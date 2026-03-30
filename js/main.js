@@ -1,4 +1,4 @@
-import { catalogosPorPerfil, defaultProfileId } from '/js/data.js';
+import { catalogosPorPerfil, defaultProfileId } from './data.js';
 import { createCarousel } from './components/Carousel.js';
 
 document.addEventListener('DOMContentLoaded', () => {

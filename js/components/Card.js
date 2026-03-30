@@ -1,4 +1,4 @@
-import { getYouTubeId, getRandomMatchScore, getRandomDuration, getRandomAgeBadge } from '../utils.js';
+import { getYouTubeId, getRandomMatchScore, getRandomDuration, getRandomAgeBadge, resolvePath } from '../utils.js';
 
 export function createCard(item) {
     const card = document.createElement('div');
@@ -8,7 +8,7 @@ export function createCard(item) {
     }
 
     const img = document.createElement('img');
-    img.src = item.img;
+    img.src = resolvePath(item.img ?? '');
     img.alt = `Movie cover`;
 
     const iframe = document.createElement('iframe');

@@ -303,6 +303,15 @@ const plotItems = [
     }
 ];
 
+
+const mindsetItems = [
+    {
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtW0UqWdq0F7Sm1L1vXPQHb5CwJ9LZ_PO6_Q&s",
+        badge: "Interativo",
+        youtube: "https://www.youtube.com/watch?v=PoSCUsNQVtw",
+        title: "O lobo de Wall Street"
+    },
+];
 const gamesItems = [
     {
         img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600&auto=format&fit=crop",

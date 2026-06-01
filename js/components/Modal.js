@@ -36,6 +36,18 @@ export function createModal(item) {
         <button class="btn-share"><i class="fas fa-share"></i></button>
     `;
 
+    // Add event listener to watch button
+    const playBtn = actionButtons.querySelector('.btn-play');
+    if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Store item data in localStorage
+            localStorage.setItem('currentPlayingItem', JSON.stringify(item));
+            // Redirect to player page
+            window.location.href = 'player.html';
+        });
+    }
+
     const metaInfo = document.createElement('div');
     metaInfo.className = 'modal-meta';
     metaInfo.innerHTML = `

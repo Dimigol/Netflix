@@ -1,4 +1,5 @@
 import { getYouTubeId, getRandomMatchScore, getRandomDuration, getRandomAgeBadge, resolvePath } from '../utils.js';
+import { createModal, openModal } from './Modal.js';
 
 export function createCard(item) {
     const card = document.createElement('div');
@@ -27,12 +28,12 @@ export function createCard(item) {
     details.innerHTML = `
         <div class="details-buttons">
             <div class="left-buttons">
-                <button class="btn-icon btn-play-icon"><i class="fas fa-play" style="margin-left:2px;"></i></button>
+                <button class="btn-icon btn-play-icon" data-action="play"><i class="fas fa-play" style="margin-left:2px;"></i></button>
                 ${item.progress ? '<button class="btn-icon"><i class="fas fa-check"></i></button>' : '<button class="btn-icon"><i class="fas fa-plus"></i></button>'}
                 <button class="btn-icon"><i class="fas fa-thumbs-up"></i></button>
             </div>
             <div class="right-buttons">
-                <button class="btn-icon"><i class="fas fa-chevron-down"></i></button>
+                <button class="btn-icon btn-modal-trigger"><i class="fas fa-chevron-down"></i></button>
             </div>
         </div>
         <div class="details-info">
@@ -86,6 +87,32 @@ export function createCard(item) {
         card.classList.remove('origin-left');
         card.classList.remove('origin-right');
     });
+
+    // Add modal trigger listeners
+    const modalTriggerBtn = details.querySelector('.btn-modal-trigger');
+    const playBtn = details.querySelector('.btn-play-icon');
+
+    const openItemModal = () => {
+        const modal = createModal(item);
+        openModal(modal);
+    };
+
+    if (modalTriggerBtn) {
+        modalTriggerBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openItemModal();
+        });
+    }
+
+    if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openItemModal();
+        });
+    }
+
+    // Also open modal when clicking on the card image (without entering hover state first on mobile)
+    img.addEventListener('click', openItemModal);
 
     return card;
 }

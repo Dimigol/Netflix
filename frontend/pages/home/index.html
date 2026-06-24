@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    <link rel="icon" href="/assets/images/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/pages/home/home.css">
+</head>
+<body>
+    <div class="brand-mark" aria-hidden="true">NETFLIX</div>
+    <main>
+        <div class="theme-toggle-wrapper">
+            <button id="theme-toggle" aria-label="Alternar tema" aria-pressed="false">
+                <span class="sr-only">Alternar modo de tema</span>
+            </button>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="login-screen" style="display: none;">
+            <div class="login-container">
+                <form class="login-form" id="login-form">
+                    <p class="eyebrow">Acesso rapido</p>
+                    <h2 id="auth-title">Entre em sua conta</h2>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <div class="password-field">
+                        <input type="password" id="password" placeholder="Senha" required>
+                        <button type="button" id="toggle-password" class="password-toggle" aria-label="Mostrar senha" aria-pressed="false">
+                            Mostrar
+                        </button>
+                    </div>
+                    <button type="submit" id="auth-submit-btn">Entrar</button>
+                    <div class="error" id="auth-error"></div>
+                    <div class="auth-toggle">
+                        Não tem conta? <a id="toggle-auth">Criar uma</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Profile Selection Screen -->
+        <div id="profile-screen" style="display: none;">
+            <p class="eyebrow">Escolha seu perfil</p>
+            <h1>Quem está assistindo?</h1>
+            <section class="profiles">
+                <ul class="profile-list" id="profiles-list">
+                </ul>
+            </section>
+            <button id="logout-btn" class="logout-btn">Sair</button>
+        </div>
+    </main>
+
+    <div class="profile-modal" id="profile-modal" aria-hidden="true">
+        <form class="profile-modal-content" id="profile-form">
+            <button type="button" class="modal-close" id="profile-modal-close" aria-label="Fechar">x</button>
+            <p class="eyebrow">Perfil</p>
+            <h2 id="profile-modal-title">Novo perfil</h2>
+            <label class="profile-field">
+                <span>Nome</span>
+                <input type="text" id="profile-name-input" maxlength="24" autocomplete="off" required>
+            </label>
+            <div class="avatar-picker" id="avatar-picker"></div>
+            <div class="profile-modal-actions">
+                <button type="button" class="secondary-action" id="profile-cancel-btn">Cancelar</button>
+                <button type="submit" class="primary-action" id="profile-save-btn">Salvar</button>
+            </div>
+            <p class="error" id="profile-form-error"></p>
+        </form>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <a href="https://www.instagram.com/dimitri_jadovski/" target="_blank">
+                <img class="logo" src="https://img.icons8.com/?size=100&id=eRJfQw0Zs44S&format=png&color=000000"
+                alt="Instagram">
+            </a>
+            <a href="https://dimigol.github.io/dimitri-site/" target="_blank">
+                <p>Dimitri Jadovski</p>
+            </a>
+            <ul class="footer-links">
+            </ul>
+        </div>
+    </footer>
+
+    <script type="module" src="/pages/home/home.js"></script>
+</body>
+</html>

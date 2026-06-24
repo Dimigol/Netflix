@@ -1,0 +1,308 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #191919;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Modal Banner */
+.modal-banner {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+/* Close Button */
+.modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    z-index: 10000;
+    font-size: 20px;
+}
+
+.modal-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Modal Info Container */
+.modal-info {
+    padding: 32px;
+    color: white;
+    flex-grow: 1;
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: white;
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-play {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-play:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-add,
+.btn-like,
+.btn-share {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.btn-add:hover,
+.btn-like:hover,
+.btn-share:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-add:disabled,
+.btn-like:disabled,
+.btn-share:disabled {
+    cursor: progress;
+    opacity: 0.65;
+}
+
+.btn-add.is-bookmarked {
+    background-color: #e50914;
+}
+
+/* Modal Meta Info */
+.modal-meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 14px;
+}
+
+.match-score {
+    color: #46d369;
+    font-weight: 600;
+}
+
+.age-badge {
+    padding: 4px 8px;
+    border: 1px solid white;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.age-badge.G {
+    border-color: green;
+    color: green;
+}
+
+.age-badge.PG {
+    border-color: blue;
+    color: blue;
+}
+
+.age-badge.PG13 {
+    border-color: orange;
+    color: orange;
+}
+
+.age-badge.R {
+    border-color: red;
+    color: red;
+}
+
+.age-badge.NC17 {
+    border-color: darkred;
+    color: darkred;
+}
+
+.duration,
+.resolution {
+    color: #999;
+}
+
+/* Modal Tags */
+.modal-tags {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.modal-tags span {
+    color: #999;
+    font-size: 13px;
+    padding: 4px 8px;
+    border: 1px solid #444;
+    border-radius: 2px;
+}
+
+/* Modal Description */
+.modal-description {
+    color: #999;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-banner {
+        height: 200px;
+    }
+
+    .modal-info {
+        padding: 24px;
+    }
+
+    .modal-title {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+
+    .modal-actions {
+        gap: 8px;
+    }
+
+    .btn-play {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .btn-add,
+    .btn-like,
+    .btn-share {
+        padding: 8px 12px;
+    }
+
+    .modal-meta {
+        gap: 12px;
+        font-size: 12px;
+    }
+
+    .modal-description {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 0;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-banner {
+        height: 150px;
+        border-radius: 0;
+    }
+
+    .modal-info {
+        padding: 16px;
+    }
+
+    .modal-title {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .modal-actions {
+        gap: 8px;
+    }
+
+    .btn-play {
+        padding: 8px 16px;
+        font-size: 13px;
+        flex: 1;
+    }
+
+    .btn-add,
+    .btn-like,
+    .btn-share {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

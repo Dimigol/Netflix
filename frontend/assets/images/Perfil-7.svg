@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Perfil verde">
+  <rect width="240" height="240" rx="12" fill="#17803c"/>
+  <circle cx="86" cy="90" r="19" fill="#fff"/>
+  <circle cx="154" cy="90" r="19" fill="#fff"/>
+  <path d="M72 154c22 24 74 24 96 0" fill="none" stroke="#fff" stroke-width="17" stroke-linecap="round"/>
+  <circle cx="120" cy="120" r="94" fill="none" stroke="#8ee3a6" stroke-width="9" opacity=".35"/>
+</svg>

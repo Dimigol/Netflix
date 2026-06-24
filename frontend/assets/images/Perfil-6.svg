@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Perfil azul">
+  <rect width="240" height="240" rx="12" fill="#1267a8"/>
+  <circle cx="82" cy="94" r="18" fill="#f7f7f7"/>
+  <circle cx="158" cy="94" r="18" fill="#f7f7f7"/>
+  <path d="M70 152c32 20 68 20 100 0" fill="none" stroke="#f7f7f7" stroke-width="16" stroke-linecap="round"/>
+  <path d="M28 28h184v184H28z" fill="none" stroke="#61b7e8" stroke-width="10" opacity=".45"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Perfil cinza">
+  <rect width="240" height="240" rx="12" fill="#41444d"/>
+  <circle cx="84" cy="94" r="18" fill="#fff"/>
+  <circle cx="156" cy="94" r="18" fill="#fff"/>
+  <path d="M74 154c30 20 62 20 92 0" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+  <path d="M48 0v240M96 0v240M144 0v240M192 0v240" stroke="#686c76" stroke-width="8" opacity=".35"/>
+</svg>

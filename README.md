@@ -11,6 +11,7 @@ O projeto usa frontend em JavaScript vanilla com modulos ES, servido pelo propri
 - [Stack](#stack)
 - [Estrutura do projeto](#estrutura-do-projeto)
 - [Como executar](#como-executar)
+- [Deploy gratuito](#deploy-gratuito)
 - [Variaveis de ambiente](#variaveis-de-ambiente)
 - [Scripts](#scripts)
 - [Seed do catalogo](#seed-do-catalogo)
@@ -160,6 +161,90 @@ Acesse:
 ```text
 http://localhost:5001
 ```
+
+## Deploy gratuito
+
+A forma mais simples de publicar esta aplicacao gratuitamente e usar:
+
+```text
+Render Free Web Service -> backend Express + frontend estatico
+MongoDB Atlas Free -> banco MongoDB
+GitHub -> repositorio conectado ao deploy
+```
+
+### 1. Criar banco no MongoDB Atlas
+
+1. Crie uma conta em MongoDB Atlas.
+2. Crie um cluster gratuito.
+3. Crie um usuario de banco com senha.
+4. Libere acesso de rede para o Render. Para testes, pode usar `0.0.0.0/0`; em producao, prefira restringir IPs quando possivel.
+5. Copie a connection string no formato `mongodb+srv://...`.
+
+Exemplo:
+
+```env
+MONGODB_URI=mongodb+srv://USER:PASSWORD@CLUSTER.mongodb.net/netflix-clone?retryWrites=true&w=majority
+```
+
+### 2. Publicar no Render
+
+Este repositorio ja inclui um arquivo [render.yaml](render.yaml) com a configuracao do servico web.
+
+No Render:
+
+1. Clique em **New +**.
+2. Escolha **Blueprint** ou **Web Service** conectado ao GitHub.
+3. Se usar Blueprint, selecione este repositorio e o Render lera `render.yaml`.
+4. Configure a variavel `MONGODB_URI` com a string do MongoDB Atlas.
+5. Confirme o deploy.
+
+Se configurar manualmente como Web Service:
+
+```text
+Build Command:
+cd backend && npm install
+
+Start Command:
+cd backend && npm start
+```
+
+Variaveis:
+
+```env
+MONGODB_URI=mongodb+srv://USER:PASSWORD@CLUSTER.mongodb.net/netflix-clone?retryWrites=true&w=majority
+JWT_SECRET=uma-chave-grande-e-segura
+NODE_ENV=production
+```
+
+O Render define `PORT` automaticamente.
+
+### 3. Popular o catalogo em producao
+
+Depois que o banco Atlas estiver configurado, rode o seed apontando para o banco remoto.
+
+Localmente:
+
+```bash
+cd backend
+MONGODB_URI="mongodb+srv://USER:PASSWORD@CLUSTER.mongodb.net/netflix-clone?retryWrites=true&w=majority" npm run seed
+```
+
+Se preferir, adicione temporariamente a mesma `MONGODB_URI` em `backend/.env` e rode:
+
+```bash
+cd backend
+npm run seed
+```
+
+### 4. Acessar a aplicacao
+
+A URL final tera este formato:
+
+```text
+https://nome-do-servico.onrender.com
+```
+
+Observacao: no plano gratuito, o Render pode "dormir" depois de um periodo sem acessos. A primeira abertura depois disso pode demorar alguns segundos.
 
 ## Variaveis de ambiente
 

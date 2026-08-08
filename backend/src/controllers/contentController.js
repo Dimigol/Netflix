@@ -121,7 +121,7 @@ function normalizeContent(content) {
   };
 }
 
-export const getAllContent = async (req, res) => {
+export const getAllContent = async (req, res, next) => {
   try {
     const { category, limit = 50 } = req.query;
     const query = category ? { category } : {};
@@ -130,11 +130,11 @@ export const getAllContent = async (req, res) => {
     const content = await Content.find(query).limit(safeLimit);
     res.json(content.map(normalizeContent));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const getContentById = async (req, res) => {
+export const getContentById = async (req, res, next) => {
   try {
     const content = await Content.findById(req.params.id);
     if (!content) {
@@ -142,11 +142,11 @@ export const getContentById = async (req, res) => {
     }
     res.json(normalizeContent(content));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const searchContent = async (req, res) => {
+export const searchContent = async (req, res, next) => {
   try {
     const { q } = req.query;
     if (!q) {
@@ -159,11 +159,11 @@ export const searchContent = async (req, res) => {
 
     res.json(results.map(normalizeContent));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const getRecommendations = async (req, res) => {
+export const getRecommendations = async (req, res, next) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -200,6 +200,6 @@ export const getRecommendations = async (req, res) => {
 
     res.json(recommendations.map(normalizeContent));
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };

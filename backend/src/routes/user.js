@@ -9,16 +9,18 @@ import {
   getMyList
 } from '../controllers/userController.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { validate } from '../middleware/validate.js';
+import { createProfileSchema, updateProfileSchema } from '../validators/userValidators.js';
 
 const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post('/profile', createProfile);
+router.post('/profile', validate(createProfileSchema), createProfile);
 router.get('/profile', getProfile);
-router.put('/profile/:profileId', updateProfile);
-router.patch('/profile/:profileId', updateProfile);
-router.post('/profile/:profileId', updateProfile);
+router.put('/profile/:profileId', validate(updateProfileSchema), updateProfile);
+router.patch('/profile/:profileId', validate(updateProfileSchema), updateProfile);
+router.post('/profile/:profileId', validate(updateProfileSchema), updateProfile);
 router.post('/watchhistory', saveWatchHistory);
 router.get('/watchhistory', getWatchHistory);
 router.put('/watchhistory/:contentId', updateBookmark);

@@ -3,7 +3,7 @@ import User from '../models/User.js';
 import mongoose from 'mongoose';
 import { isAllowedProfileAvatar, pickProfileAvatar } from '../utils/profileAvatars.js';
 
-export const createProfile = async (req, res) => {
+export const createProfile = async (req, res, next) => {
   try {
     const { name, avatar } = req.body;
     const user = await User.findById(req.userId);
@@ -28,11 +28,11 @@ export const createProfile = async (req, res) => {
 
     res.status(201).json(newProfile);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res, next) => {
   try {
     const { profileId } = req.params;
     const { name, avatar } = req.body;
@@ -63,11 +63,11 @@ export const updateProfile = async (req, res) => {
     await user.save();
     res.json(profile);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const getProfile = async (req, res) => {
+export const getProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
     if (!user) {
@@ -75,13 +75,17 @@ export const getProfile = async (req, res) => {
     }
 
     const activeProfile = user.profiles.find(p => p._id.toString() === req.profileId);
+    if (!activeProfile) {
+      return res.status(404).json({ error: 'Profile not found' });
+    }
+
     res.json({ ...activeProfile.toObject(), userId: req.userId });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const saveWatchHistory = async (req, res) => {
+export const saveWatchHistory = async (req, res, next) => {
   try {
     const { contentId, progress } = req.body;
 
@@ -107,11 +111,11 @@ export const saveWatchHistory = async (req, res) => {
     await watchHistory.save();
     res.json(watchHistory);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const getWatchHistory = async (req, res) => {
+export const getWatchHistory = async (req, res, next) => {
   try {
     const watchHistory = await WatchHistory.find({
       userId: req.userId,
@@ -122,11 +126,11 @@ export const getWatchHistory = async (req, res) => {
 
     res.json(watchHistory);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const updateBookmark = async (req, res) => {
+export const updateBookmark = async (req, res, next) => {
   try {
     const { contentId } = req.params;
     const { isBookmarked } = req.body;
@@ -151,11 +155,11 @@ export const updateBookmark = async (req, res) => {
     await watchHistory.save();
     res.json(watchHistory);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const getMyList = async (req, res) => {
+export const getMyList = async (req, res, next) => {
   try {
     const myList = await WatchHistory.find({
       userId: req.userId,
@@ -165,6 +169,6 @@ export const getMyList = async (req, res) => {
 
     res.json(myList);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };

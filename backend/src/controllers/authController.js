@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { pickProfileAvatar } from '../utils/profileAvatars.js';
 
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const { email, password, username } = req.body;
 
@@ -45,11 +45,11 @@ export const register = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 

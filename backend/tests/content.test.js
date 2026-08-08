@@ -38,6 +38,21 @@ describe('GET /api/content', () => {
     expect(res.body).toHaveLength(1);
     expect(res.body[0].category).toBe('series');
   });
+
+  it('pagina os resultados com limit e page', async () => {
+    for (let i = 1; i <= 5; i += 1) {
+      await Content.create({ title: `Filme ${i}`, category: 'filmes' });
+    }
+
+    const firstPage = await request(app).get('/api/content?limit=2&page=1');
+    const secondPage = await request(app).get('/api/content?limit=2&page=2');
+
+    expect(firstPage.body).toHaveLength(2);
+    expect(secondPage.body).toHaveLength(2);
+    expect(firstPage.body[0]._id).not.toBe(secondPage.body[0]._id);
+    expect(firstPage.headers['x-total-count']).toBe('5');
+    expect(firstPage.headers['x-total-pages']).toBe('3');
+  });
 });
 
 describe('GET /api/content/:id', () => {

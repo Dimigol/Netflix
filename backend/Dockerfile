@@ -1,11 +1,16 @@
 FROM node:20-alpine
 
+# Build context e a raiz do repositorio (ver docker-compose.yml) porque o
+# server.js espera encontrar ../../frontend a partir de backend/src.
+WORKDIR /app
+
+COPY backend/package*.json backend/
+RUN npm install --prefix backend
+
+COPY backend backend
+COPY frontend frontend
+
 WORKDIR /app/backend
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
 
 EXPOSE 5001
 

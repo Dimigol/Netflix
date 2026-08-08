@@ -167,10 +167,11 @@ export const api = {
   },
 
   // Content endpoints
-  getContent(category = null, limit = 50) {
+  getContent(category = null, limit = 50, page = 1) {
     const params = new URLSearchParams();
     if (category) params.append('category', category);
     params.append('limit', limit);
+    params.append('page', page);
     return this.request(`/content?${params}`);
   },
 
@@ -203,6 +204,10 @@ export const api = {
 
   getProfile() {
     return this.request('/user/profile');
+  },
+
+  deleteProfile(profileId) {
+    return this.request(`/user/profile/${profileId}`, { method: 'DELETE' });
   },
 
   saveWatchProgress(contentId, progress) {

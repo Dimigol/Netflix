@@ -105,6 +105,8 @@ Netflix/
 
 ### Opcao 1: Docker Compose
 
+A imagem e testada automaticamente (build + health check) no CI a cada push, entao fica dificil essa opcao quebrar em silencio.
+
 Pre-requisitos:
 
 - Docker Desktop instalado.

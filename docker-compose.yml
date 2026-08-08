@@ -30,6 +30,7 @@ services:
       - mongodb
     volumes:
       - ./backend:/app/backend
+      - ./frontend:/app/frontend
       - /app/backend/node_modules
     networks:
       - netflix-network

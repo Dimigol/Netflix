@@ -21,6 +21,7 @@ const profileNameInput = document.getElementById('profile-name-input');
 const avatarPicker = document.getElementById('avatar-picker');
 const profileFormError = document.getElementById('profile-form-error');
 const profileCancelBtn = document.getElementById('profile-cancel-btn');
+const profileDeleteBtn = document.getElementById('profile-delete-btn');
 const profileModalClose = document.getElementById('profile-modal-close');
 
 let isLoginMode = true;
@@ -216,6 +217,11 @@ function openProfileModal({ profile = null } = {}) {
   profileModalTitle.textContent = editingProfileId ? 'Editar perfil' : 'Novo perfil';
   profileNameInput.value = profile?.name ?? '';
   profileFormError.textContent = '';
+
+  const user = getStoredUser();
+  const canDelete = Boolean(editingProfileId) && (user?.profiles?.length ?? 0) > 1;
+  profileDeleteBtn.style.display = canDelete ? 'inline-block' : 'none';
+
   renderAvatarPicker();
   profileModal.classList.add('is-open');
   profileModal.setAttribute('aria-hidden', 'false');
@@ -342,6 +348,35 @@ profileForm.addEventListener('submit', async (event) => {
     loadProfiles();
   } catch (error) {
     profileFormError.textContent = error.message;
+  }
+});
+
+profileDeleteBtn.addEventListener('click', async () => {
+  if (!editingProfileId) return;
+
+  const confirmed = window.confirm('Tem certeza que deseja excluir este perfil? Essa ação não pode ser desfeita.');
+  if (!confirmed) return;
+
+  try {
+    profileDeleteBtn.disabled = true;
+    await api.deleteProfile(editingProfileId);
+
+    const user = getStoredUser();
+    user.profiles = user.profiles.filter((profile) => profile._id !== editingProfileId);
+    saveStoredUser(user);
+
+    if (auth.getActiveProfileId() === editingProfileId) {
+      localStorage.removeItem('perfilAtivoId');
+      localStorage.removeItem('perfilAtivoNome');
+      localStorage.removeItem('perfilAtivoImagem');
+    }
+
+    closeProfileModal();
+    loadProfiles();
+  } catch (error) {
+    profileFormError.textContent = error.message;
+  } finally {
+    profileDeleteBtn.disabled = false;
   }
 });
 

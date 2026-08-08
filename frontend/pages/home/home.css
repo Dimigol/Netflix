@@ -559,6 +559,27 @@ body.profile-selection-screen footer {
   color: #fff;
 }
 
+.danger-action {
+  min-width: 112px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  border: 1px solid rgba(229, 9, 20, 0.6);
+  background: transparent;
+  color: #ff6b6b;
+  margin-right: auto;
+}
+
+.danger-action:hover {
+  background: rgba(229, 9, 20, 0.14);
+}
+
+.danger-action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Responsividade */
 @media (max-width: 1200px) {
   main {

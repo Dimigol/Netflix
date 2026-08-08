@@ -123,11 +123,20 @@ function normalizeContent(content) {
 
 export const getAllContent = async (req, res, next) => {
   try {
-    const { category, limit = 50 } = req.query;
+    const { category, limit = 50, page = 1 } = req.query;
     const query = category ? { category } : {};
     const safeLimit = Number.parseInt(limit, 10) || 50;
+    const safePage = Math.max(Number.parseInt(page, 10) || 1, 1);
+    const skip = (safePage - 1) * safeLimit;
 
-    const content = await Content.find(query).limit(safeLimit);
+    const [content, total] = await Promise.all([
+      Content.find(query).skip(skip).limit(safeLimit),
+      Content.countDocuments(query)
+    ]);
+
+    res.set('X-Total-Count', String(total));
+    res.set('X-Total-Pages', String(Math.max(Math.ceil(total / safeLimit), 1)));
+    res.set('X-Current-Page', String(safePage));
     res.json(content.map(normalizeContent));
   } catch (err) {
     next(err);

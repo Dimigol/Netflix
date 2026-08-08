@@ -2,6 +2,8 @@ import { describe, it, expect, beforeAll, afterAll, afterEach } from 'vitest';
 import request from 'supertest';
 import app from '../src/app.js';
 import User from '../src/models/User.js';
+import WatchHistory from '../src/models/WatchHistory.js';
+import Content from '../src/models/Content.js';
 import { setupTestDb, teardownTestDb, clearTestDb } from './setup.js';
 
 beforeAll(async () => {
@@ -86,5 +88,70 @@ describe('GET /api/user/profile', () => {
       .set('Authorization', `Bearer ${res.token}`);
 
     expect(profileRes.status).toBe(404);
+  });
+});
+
+describe('DELETE /api/user/profile/:profileId', () => {
+  it('remove um perfil adicional', async () => {
+    const { token } = await registerAndLogin();
+
+    const createRes = await request(app)
+      .post('/api/user/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'Criancas' });
+
+    const res = await request(app)
+      .delete(`/api/user/profile/${createRes.body._id}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.deletedProfileId).toBe(createRes.body._id);
+
+    const user = await User.findOne({ email: 'profile@test.com' });
+    expect(user.profiles).toHaveLength(1);
+  });
+
+  it('nao permite excluir o unico perfil da conta', async () => {
+    const { token, activeProfileId } = await registerAndLogin();
+
+    const res = await request(app)
+      .delete(`/api/user/profile/${activeProfileId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(400);
+  });
+
+  it('retorna 404 para perfil inexistente', async () => {
+    const { token } = await registerAndLogin();
+
+    const res = await request(app)
+      .delete('/api/user/profile/000000000000000000000000')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.status).toBe(404);
+  });
+
+  it('apaga o historico/lista associados ao perfil removido', async () => {
+    const { token } = await registerAndLogin();
+
+    const createRes = await request(app)
+      .post('/api/user/profile')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ name: 'Criancas' });
+
+    const content = await Content.create({ title: 'Filme Y', category: 'filmes' });
+
+    await request(app)
+      .post('/api/user/watchhistory')
+      .set('Authorization', `Bearer ${token}`)
+      .set('X-Profile-Id', createRes.body._id)
+      .send({ contentId: content._id, progress: 50 });
+
+    await request(app)
+      .delete(`/api/user/profile/${createRes.body._id}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    const remainingHistory = await WatchHistory.find({ profileId: createRes.body._id });
+    expect(remainingHistory).toHaveLength(0);
   });
 });

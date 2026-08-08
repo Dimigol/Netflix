@@ -67,6 +67,39 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
+export const deleteProfile = async (req, res, next) => {
+  try {
+    const { profileId } = req.params;
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const profileExists = user.profiles.some(p => p._id.toString() === profileId);
+    if (!profileExists) {
+      return res.status(404).json({ error: 'Profile not found' });
+    }
+
+    if (user.profiles.length <= 1) {
+      return res.status(400).json({ error: 'Não é possível excluir o único perfil da conta' });
+    }
+
+    user.profiles = user.profiles.filter(p => p._id.toString() !== profileId);
+
+    if (user.activeProfileId?.toString() === profileId) {
+      user.activeProfileId = user.profiles[0]._id;
+    }
+
+    await user.save();
+    await WatchHistory.deleteMany({ userId: req.userId, profileId });
+
+    res.json({ deletedProfileId: profileId, activeProfileId: user.activeProfileId });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);

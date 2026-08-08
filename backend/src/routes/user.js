@@ -2,6 +2,7 @@ import express from 'express';
 import {
   createProfile,
   updateProfile,
+  deleteProfile,
   getProfile,
   saveWatchHistory,
   getWatchHistory,
@@ -21,6 +22,7 @@ router.get('/profile', getProfile);
 router.put('/profile/:profileId', validate(updateProfileSchema), updateProfile);
 router.patch('/profile/:profileId', validate(updateProfileSchema), updateProfile);
 router.post('/profile/:profileId', validate(updateProfileSchema), updateProfile);
+router.delete('/profile/:profileId', deleteProfile);
 router.post('/watchhistory', saveWatchHistory);
 router.get('/watchhistory', getWatchHistory);
 router.put('/watchhistory/:contentId', updateBookmark);

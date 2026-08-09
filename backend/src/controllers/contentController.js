@@ -42,7 +42,6 @@ const BROKEN_YOUTUBE_IDS = new Set([
   '0G-lbJbYNCk',
   '_nLAzRY3F0c',
   'WDkg3h8PHMU',
-  'xjDODtChtcE',
   'uYPbbksJxIE',
   'hZJYeoPRXNQ',
   '0Z0yulnAzj0',
